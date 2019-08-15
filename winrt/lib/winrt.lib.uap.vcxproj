@@ -12,6 +12,7 @@
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <RootNamespace>Microsoft.Graphics.Canvas</RootNamespace>
     <ItemsRootNamespace>Microsoft.Graphics.Canvas</ItemsRootNamespace>
+    <UseCrtSDKReference>false</UseCrtSDKReference>
   </PropertyGroup>
   <Import Project="..\..\build\Win2D.cpp.props" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -28,7 +29,7 @@
     <ClCompile>
       <CompileAsWinRT>false</CompileAsWinRT>
       <AdditionalIncludeDirectories>..\Inc;$(EtwDirectory);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WRT_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WRT_EXPORT;_ITERATOR_DEBUG_LEVEL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <WarningLevel>Level4</WarningLevel>
     </ClCompile>
     <Link>
@@ -50,11 +51,11 @@
     <!-- Reference paths differ depending on locally installed vs. NuGet SDK -->
     <ItemGroup Condition="'$(UseNuGetSDK)' == ''">
       <MetaDataDir Include="$(WindowsSDK_MetadataPath)\$(TargetPlatformVersion)\Windows.Foundation.FoundationContract\3.0.0.0" />
-      <MetaDataDir Include="$(WindowsSDK_MetadataPath)\$(TargetPlatformVersion)\Windows.Foundation.UniversalApiContract\6.0.0.0" />
+      <MetaDataDir Include="$(WindowsSDK_MetadataPath)\$(TargetPlatformVersion)\Windows.Foundation.UniversalApiContract\8.0.0.0" />
     </ItemGroup>
     <ItemGroup Condition="'$(UseNuGetSDK)' != ''">
       <MetaDataDir Include="$(WindowsSDK_MetadataPath)\$(TargetPlatformVersion)\Windows.Foundation.FoundationContract\3.0.0.0" />
-      <MetaDataDir Include="$(WindowsSDK_MetadataPath)\$(TargetPlatformVersion)\031\6.0.0.0" /> <!-- Windows.Foundation.UniversalApiContract lives here -->
+      <MetaDataDir Include="$(WindowsSDK_MetadataPath)\$(TargetPlatformVersion)\031\8.0.0.0" /> <!-- Windows.Foundation.UniversalApiContract lives here -->
     </ItemGroup>
     <Exec Command="$(MdMergeExe) -v @(MetaDataDir -> '-metadata_dir &quot;%(Identity)&quot;', ' ') -o &quot;$(MergedWinmdDirectory)&quot; -i &quot;$(UnmergedWinmdDirectory)&quot; -partial -n:Microsoft.Graphics.Canvas:3" />
   </Target>
